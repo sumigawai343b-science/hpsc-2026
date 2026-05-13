@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
+#include <omp.h>
 
 int main() {
   int n = 50;
@@ -16,7 +17,9 @@ int main() {
   for (int i=0; i<range; i++) {
     bucket[i] = 0;
   }
+  #pragma omp parallel for
   for (int i=0; i<n; i++) {
+    #pragma omp atomic
     bucket[key[i]]++;
   }
   for (int i=0, j=0; i<range; i++) {
